@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Form Pendaftaran Kirim ke WA</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 30px;
+            background-color: #f5f5f5;
+        }
+
+        form {
+            max-width: 500px;
+            margin: auto;
+            background-color: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .radio-group,
+        .checkbox-group {
+            margin-top: 5px;
+            padding-left: 20px;
+        }
+
+        .radio-group label,
+        .checkbox-group label {
+            font-weight: normal;
+            display: block;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 12px;
+            background-color: #25d366;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            width: 100%;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #128c7e;
+        }
+    </style>
+</head>
+<body>
+
+    <form onsubmit="kirimKeWA(); return false;">
+        <h2>Formulir Pendaftaran</h2>
+
+        <label for="nama">Nama:</label>
+        <input type="text" id="nama" required>
+
+        <label for="usia">Usia:</label>
+        <input type="number" id="usia" required>
+
+        <label>Jenis Kelamin:</label>
+        <div class="radio-group">
+            <label><input type="radio" name="jk" value="Laki-laki" required> Laki-laki</label>
+            <label><input type="radio" name="jk" value="Perempuan"> Perempuan</label>
+        </div>
+
+        <label>Pilih Lomba:</label>
+        <div class="checkbox-group">
+            <label><input type="checkbox" name="lomba" value="Menyanyi"> Menyanyi</label>
+            <label><input type="checkbox" name="lomba" value="Menari"> Menari</label>
+            <label><input type="checkbox" name="lomba" value="Puisi"> Puisi</label>
+        </div>
+
+        <button type="submit">Kirim ke WhatsApp</button>
+    </form>
+
+    <script>
+        function kirimKeWA() {
+            let nama = document.getElementById("nama").value;
+            let usia = document.getElementById("usia").value;
+            let jk = document.querySelector('input[name="jk"]:checked').value;
+
+            let lombaTerpilih = [];
+            document.querySelectorAll('input[name="lomba"]:checked').forEach((cb) => {
+                lombaTerpilih.push(cb.value);
+            });
+
+            let pesan = `Halo, saya ingin mendaftar:\n\nNama: ${nama}\nUsia: ${usia}\nJenis Kelamin: ${jk}\nLomba: ${lombaTerpilih.join(", ")}`;
+
+            let nomorWA = "6283831582407"; // Ganti dengan nomor tujuan kamu (tanpa tanda +)
+            let urlWA = `https://wa.me/${nomorWA}?text=${encodeURIComponent(pesan)}`;
+            window.open(urlWA, "_blank");
+        }
+    </script>
+
+</body>
+</html>
